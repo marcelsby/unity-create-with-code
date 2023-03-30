@@ -28,7 +28,7 @@ public class SpawnManager : MonoBehaviour
         int animalIndex = Random.Range(0, animalPrefabs.Length);
         var selectedAnimal = animalPrefabs[animalIndex];
 
-        // Select a random X spawn position for the animal
+        // Select a random position to spawn the animal
         Vector3 spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, spawnPosZ);
 
         // Effectively spawn the animal in the scene
