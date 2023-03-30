@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float horizontalInput;
+    public float verticalInput;
     public float speed = 10.0f;
     public float xRange = 15.0f;
+    public float zMaxPos = 15.0f;
+    public float zMinPos = 0.0f;
 
     public GameObject projectilePrefab;
 
@@ -19,8 +21,24 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 currentPos = transform.position;
+        var currentPos = transform.position;
 
+        HandleHorizontalMovement(currentPos);
+        HandleVerticalMovement(currentPos);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(projectilePrefab, transform.position + new Vector3(0, 1.2f, 0), transform.rotation);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Game over!");
+    }
+
+    void HandleHorizontalMovement(Vector3 currentPos)
+    {
         // Verify if the player is trespassing the left side of the map boundary
         if (currentPos.x < -xRange)
             transform.position = new Vector3(-xRange, currentPos.y, currentPos.z);
@@ -30,15 +48,26 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(xRange, currentPos.y, currentPos.z);
 
         // Get user horizontal input
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Horizontal");
 
         // Moves the player
-        transform.Translate(Vector3.right * Time.deltaTime * horizontalInput * speed);
+        transform.Translate(Vector3.right * Time.deltaTime * verticalInput * speed);
+    }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Instantiate(projectilePrefab, transform.position + new Vector3(0, 1.2f, 0), transform.rotation);
-        }
+    void HandleVerticalMovement(Vector3 currentPos)
+    {
+        // Verify if the player is trespassing the bottom map boundary
+        if (currentPos.z < zMinPos)
+            transform.position = new Vector3(currentPos.x, currentPos.y, zMinPos);
 
+        // Verify if the player is trespassing the top map boundary
+        if (currentPos.z > zMaxPos)
+            transform.position = new Vector3(currentPos.x, currentPos.y, zMaxPos);
+
+        // Get user horizontal input
+        verticalInput = Input.GetAxisRaw("Vertical");
+
+        // Moves the player
+        transform.Translate(Vector3.forward * Time.deltaTime * verticalInput * speed);
     }
 }
