@@ -6,9 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     public float verticalInput;
     public float speed = 10.0f;
-    public float xRange = 15.0f;
+    public float xRange = 17.0f;
     public float zMaxPos = 15.0f;
     public float zMinPos = 0.0f;
+    private int lives = 3;
 
     public GameObject projectilePrefab;
 
@@ -28,13 +29,21 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Instantiate(projectilePrefab, transform.position + new Vector3(0, 1.2f, 0), transform.rotation);
+            Instantiate(projectilePrefab, transform.position + new Vector3(0, 1.2f, 1.0f), transform.rotation);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Game over!");
+        if (lives == 0)
+        {
+            Debug.Log("Game over!");
+        }
+        else
+        {
+            lives--;
+            Debug.Log($"Remaining lives: {lives}");
+        }
     }
 
     void HandleHorizontalMovement(Vector3 currentPos)

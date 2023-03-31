@@ -20,5 +20,12 @@ public class DetectCollisions : MonoBehaviour
     {
         Destroy(gameObject);
         Destroy(other.gameObject);
+
+        var scoreManagerObj = GameObject.Find("ScoreManager");
+        var scoreManagerScript = scoreManagerObj.GetComponent<ScoreManager>();
+
+        scoreManagerScript.IncrementAnimalFeeded();
+
+        Debug.Log($"Score: {scoreManagerScript.Score}");
     }
 }
