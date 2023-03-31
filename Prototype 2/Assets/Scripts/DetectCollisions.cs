@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DetectCollisions : MonoBehaviour
 {
+    public int hungerToDecrease = 30;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,19 +15,27 @@ public class DetectCollisions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
-        Destroy(other.gameObject);
+        var otherAnimalController = other.gameObject.GetComponent<AnimalController>();
+        
+        otherAnimalController.DecreaseHunger(hungerToDecrease);
 
-        var scoreManagerObj = GameObject.Find("ScoreManager");
-        var scoreManagerScript = scoreManagerObj.GetComponent<ScoreManager>();
+        if (otherAnimalController.currentHunger < 1)
+        {
+            Destroy(gameObject);
+            Destroy(other.gameObject);
 
-        scoreManagerScript.IncrementAnimalFeeded();
+            var scoreManagerObj = GameObject.Find("ScoreManager");
+            var scoreManagerScript = scoreManagerObj.GetComponent<ScoreManager>();
 
-        Debug.Log($"Score: {scoreManagerScript.Score}");
+            scoreManagerScript.IncrementAnimalFeeded();
+
+            Debug.Log($"Score: {scoreManagerScript.Score}");
+        }
+
     }
 }
