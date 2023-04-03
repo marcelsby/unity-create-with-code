@@ -24,7 +24,7 @@ public class DetectCollisions : MonoBehaviour
         
         otherAnimalController.DecreaseHunger(hungerToDecrease);
 
-        if (otherAnimalController.currentHunger < 1)
+        if (otherAnimalController.CurrentHunger < 1)
         {
             Destroy(gameObject);
             Destroy(other.gameObject);

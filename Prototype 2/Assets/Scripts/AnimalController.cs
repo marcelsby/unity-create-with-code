@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class AnimalController : MonoBehaviour
 {
+    public int CurrentHunger { get { return currentHunger; } }
     public int maxHunger;
-    public int currentHunger;
     public HungerBar hungerBar;
+    private int currentHunger;
 
     // Start is called before the first frame update
     void Start()
