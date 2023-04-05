@@ -5,19 +5,19 @@ using UnityEngine;
 public class MoveLeft : MonoBehaviour
 {
     private int leftBound = -20;
-    private float speed = 30;
-    private PlayerController playerControllerScript;
+    private float speed = 20;
+    private GameManager gameManagerScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!playerControllerScript.gameOver)
+        if (!gameManagerScript.isGameOver)
         {
             transform.Translate(Vector3.left * Time.deltaTime * speed);
         }
@@ -25,7 +25,6 @@ public class MoveLeft : MonoBehaviour
         if (gameObject.CompareTag("Obstacle") && transform.position.x < leftBound)
         {
             Destroy(gameObject);
-            Debug.Log("Obstáculo destruído!");
         }
     }
 }
