@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnim;
     private AudioSource playerAudio;
     private GameManager gameManagerScript;
+    private ScoreManager scoreManagerScript;
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
     public AudioClip jumpSound;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
         SetGravity(gravityModifier);
 
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+        scoreManagerScript = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
     }
 
     // Update is called once per frame
@@ -81,7 +83,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Scorewall"))
         {
-            gameManagerScript.IncrementObstaclesPassed();
+            scoreManagerScript.IncrementObstaclesPassed();
         }}
 
     private void SetGravity(float gravityModifier = 1)
