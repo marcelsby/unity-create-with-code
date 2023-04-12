@@ -82,7 +82,6 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Scorewall"))
         {
             gameManagerScript.IncrementObstaclesPassed();
-            Debug.Log($"Score: {gameManagerScript.Score}");
         }}
 
     private void SetGravity(float gravityModifier = 1)
