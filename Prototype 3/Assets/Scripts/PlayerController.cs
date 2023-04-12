@@ -9,8 +9,10 @@ public class PlayerController : MonoBehaviour
     private ScoreManager scoreManagerScript;
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
+    public ParticleSystem scoreParticle;
     public AudioClip jumpSound;
     public AudioClip crashSound;
+    public AudioClip scoreSound;
     public float jumpForce = 10;
     public float gravityModifier;
     public bool isOnGround = true;
@@ -65,6 +67,11 @@ public class PlayerController : MonoBehaviour
             {
                 dirtParticle.Play();
             }
+
+            if (scoreParticle.isPlaying)
+            {
+                scoreParticle.Stop();
+            }
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
@@ -84,7 +91,12 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Scorewall"))
         {
             scoreManagerScript.IncrementObstaclesPassed();
-        }}
+
+            playerAudio.PlayOneShot(scoreSound);
+
+            scoreParticle.Play();
+        }
+    }
 
     private void SetGravity(float gravityModifier = 1)
     {
